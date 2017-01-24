@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Rex Jumper</title>
+    <script type="text/javascript" src="bundle.js" charset="utf-8"></script>
+
+  </head>
+  <body>
+    <canvas id="myCanvas" width="600" height="340" style="border:1px solid #000000;"></canvas>
+
+    <script>
+      var canvas = document.getElementById("myCanvas");
+      var ctx = canvas.getContext("2d");
+
+      var x = canvas.width;
+      var y = canvas.height-50;
+      var dx = -1;
+      var dy = 0;
+
+      //send out an object
+      function drawObject() {
+          ctx.beginPath();
+          ctx.arc(x, y, 10, 0, Math.PI*2);
+          ctx.fillStyle = "deepskyblue";
+          ctx.fill();
+          ctx.closePath();
+      }
+
+      //T-rex
+      function drawRex() {
+        ctx.beginPath();
+        ctx.arc(90, 290, 10, 0, Math.PI*2);
+        ctx.fillStyle = "black";
+        ctx.fill();
+        ctx.closePath();
+      }
+      
+      function draw() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          drawObject();
+          drawRex();
+          x += dx;
+          y += dy;
+      }
+
+      setInterval(draw, 5);
+
+      //detect collision
+    </script>
+  </body>
+</html>
