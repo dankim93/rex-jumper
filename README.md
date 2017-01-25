@@ -10,7 +10,7 @@ Game Functionalities:
 
 - [ ] Constantly moving player
 - [ ] Objects in the way of moving player
-- [ ] Ability to Duck or Jump to avoid objects
+- [ ] Ability to Jump to avoid objects
 
 In addition, this project will include:
 

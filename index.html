@@ -3,23 +3,41 @@
   <head>
     <meta charset="utf-8">
     <title>Rex Jumper</title>
-    <script type="text/javascript" src="bundle.js" charset="utf-8"></script>
-
   </head>
   <body>
     <canvas id="myCanvas" width="600" height="340" style="border:1px solid #000000;"></canvas>
+    <script type="text/javascript" src="bundle.js" charset="utf-8"></script>
 
-    <script>
+    <!-- <script>
       var canvas = document.getElementById("myCanvas");
       var ctx = canvas.getContext("2d");
-
+      //object
       var x = canvas.width;
       var y = canvas.height-50;
       var dx = -1;
       var dy = 0;
 
+      //T-rex
+      var rex_x = 90;
+      var rex_y = 290;
+
+      // var gravity = 1;
+      // var positionX = 200;
+      // var positionY = 0;
+      // var velocityY = 0;
+      // var groundY = 300;
+      // var ballSize = 20;
+      // var jumping = false;
+      //
+      // const keyPressed = () => {
+      //   if(!jumping && keyCode === 32) {
+      //     velocityY = -20;
+      //     jumping = true;
+      //   }
+      // };
+
       //send out an object
-      function drawObject() {
+      const drawObject = () => {
           ctx.beginPath();
           ctx.arc(x, y, 10, 0, Math.PI*2);
           ctx.fillStyle = "deepskyblue";
@@ -28,25 +46,33 @@
       }
 
       //T-rex
-      function drawRex() {
+      const drawRex = () => {
         ctx.beginPath();
         ctx.arc(90, 290, 10, 0, Math.PI*2);
         ctx.fillStyle = "black";
         ctx.fill();
         ctx.closePath();
       }
-      
-      function draw() {
+
+      const drawGround = () => {
+        ctx.beginPath();
+        ctx.moveTo(0, 300);
+        ctx.lineTo(600, 300);
+        ctx.stroke();
+      }
+
+      const draw = () => {
           ctx.clearRect(0, 0, canvas.width, canvas.height);
           drawObject();
           drawRex();
+          drawGround();
           x += dx;
           y += dy;
       }
 
-      setInterval(draw, 5);
+      setInterval(draw, 10);
 
       //detect collision
-    </script>
+    </script> -->
   </body>
 </html>
