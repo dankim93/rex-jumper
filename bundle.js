@@ -53,6 +53,9 @@
 	  var ctx = canvas.getContext("2d");
 	
 	  const game = new Game(ctx);
+	  document.addEventListener('keydown', e => {
+	    game.handleKeyPress(e);
+	  });
 	  game.start();
 	});
 
@@ -86,8 +89,15 @@
 	    this.drawGround();
 	  }
 	
+	  handleKeyPress(e) {
+	    let code = e.keyCode;
+	    if (code === 32) {
+	      this.player.jump(this.ctx);
+	    }
+	  }
+	
 	  start() {
-	    setInterval(this.draw.bind(this), 10);
+	    setInterval(this.draw.bind(this), 3);
 	  }
 	}
 	
@@ -105,6 +115,7 @@
 	  constructor() {
 	    this.DIM_X = 600;
 	    this.DIM_Y = 290;
+	    this.dx = -1;
 	  }
 	  drawCactus(ctx) {
 	    ctx.beginPath();
@@ -112,7 +123,12 @@
 	    ctx.fillStyle = "deepskyblue";
 	    ctx.fill();
 	    ctx.closePath();
-	    this.DIM_X -= 1;
+	    this.DIM_X += this.dx;
+	    if (this.DIM_X === 0) {
+	      this.dx = -1 * this.dx;
+	    } else if (this.DIM_X === 580) {
+	      this.dx = -1;
+	    }
 	  }
 	
 	}
@@ -128,14 +144,35 @@
 	  constructor() {
 	    this.DIM_X = 90;
 	    this.DIM_Y = 290;
+	    this.dy = -1.5;
 	  }
 	
 	  drawRex(ctx) {
+	    // ctx.beginPath();
+	    // ctx.arc(this.DIM_X, this.DIM_Y, 10, 0, Math.PI*2);
+	    // ctx.fillStyle = "black";
+	    // ctx.fill();
+	    // ctx.closePath();
 	    ctx.beginPath();
-	    ctx.arc(90, 290, 10, 0, Math.PI*2);
+	    ctx.arc(this.DIM_X, this.DIM_Y, 10, 0, Math.PI*2);
 	    ctx.fillStyle = "black";
 	    ctx.fill();
 	    ctx.closePath();
+	    this.DIM_Y += this.dy;
+	
+	    if (this.DIM_Y <= 220) {
+	      // this.dy = -1 * this.dy;
+	      this.dy += 0.5;
+	    } else if (this.DIM_Y === 290) {
+	      this.dy = 0;
+	    }
+	  }
+	
+	  jump(ctx) {
+	
+	    if (this.DIM_Y === 290) {
+	      this.dy = -1.5;
+	    }
 	  }
 	}
 	
