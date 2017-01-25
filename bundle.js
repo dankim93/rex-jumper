@@ -52,10 +52,13 @@
 	  canvas.height = Game.DIM_Y;
 	  var ctx = canvas.getContext("2d");
 	
+	
 	  const game = new Game(ctx);
 	  document.addEventListener('keydown', e => {
-	    game.handleKeyPress(e);
+	    game.handleJumpPress(e);
+	    // game.handleStartPress(e);
 	  });
+	
 	  game.start();
 	});
 
@@ -66,13 +69,16 @@
 
 	const Cactus = __webpack_require__(2);
 	const Player = __webpack_require__(3);
+	const Bird = __webpack_require__(4);
 	
 	class Game {
 	  constructor(ctx) {
 	    this.ctx = ctx;
 	    this.score = 0;
-	    this.cactus = new Cactus();
 	    this.player = new Player();
+	    this.cactus = new Cactus();
+	    this.bird = new Bird();
+	    this.init = setInterval(this.draw.bind(this), 3);
 	  }
 	
 	  drawGround() {
@@ -80,24 +86,47 @@
 	    this.ctx.moveTo(0, 300);
 	    this.ctx.lineTo(600, 300);
 	    this.ctx.stroke();
+	
 	  }
 	
 	  draw(){
 	    this.ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
 	    this.cactus.drawCactus(this.ctx);
 	    this.player.drawRex(this.ctx);
+	    this.bird.drawBird(this.ctx);
+	    this.collision(this.player, this.cactus);
 	    this.drawGround();
 	  }
 	
-	  handleKeyPress(e) {
+	  handleJumpPress(e) {
 	    let code = e.keyCode;
 	    if (code === 32) {
 	      this.player.jump(this.ctx);
 	    }
 	  }
 	
+	  // handleStartPress(e) {
+	  //   let code = e.keyCode;
+	  //   if (code === 13) {
+	  //     this.start();
+	  //   }
+	  // }
+	
+	  collision(rect1, rect2) {
+	    if (rect1.DIM_X < rect2.DIM_X + 20 &&
+	        rect1.DIM_X + 20 > rect2.DIM_X &&
+	        rect1.DIM_Y < rect2.DIM_Y + 20 &&
+	        20 + rect1.DIM_Y > rect2.DIM_Y) {
+	          // clearInterval(this.start);
+	          clearInterval(this.init);
+	          const music = new Audio("./assets/audio/lose.mp3");
+	          music.play();
+	
+	        }
+	  }
+	
 	  start() {
-	    setInterval(this.draw.bind(this), 3);
+	    this.init;
 	  }
 	}
 	
@@ -114,12 +143,15 @@
 	class Cactus{
 	  constructor() {
 	    this.DIM_X = 600;
-	    this.DIM_Y = 290;
+	    this.DIM_Y = 280;
 	    this.dx = -1;
+	    this.img = document.getElementById('cactus');
 	  }
 	  drawCactus(ctx) {
 	    ctx.beginPath();
-	    ctx.arc(this.DIM_X, this.DIM_Y, 10, 0, Math.PI*2);
+	    // ctx.arc(this.DIM_X, this.DIM_Y, 10, 0, Math.PI*2);
+	    // ctx.rect(this.DIM_X, this.DIM_Y, 20, 20);
+	    ctx.drawImage(this.img, this.DIM_X, this.DIM_Y, 20, 20);
 	    ctx.fillStyle = "deepskyblue";
 	    ctx.fill();
 	    ctx.closePath();
@@ -130,7 +162,6 @@
 	      this.dx = -1;
 	    }
 	  }
-	
 	}
 	
 	module.exports = Cactus;
@@ -143,40 +174,71 @@
 	class Player {
 	  constructor() {
 	    this.DIM_X = 90;
-	    this.DIM_Y = 290;
+	    this.DIM_Y = 280;
 	    this.dy = -1.5;
+	    this.img = document.getElementById('rex');
 	  }
 	
 	  drawRex(ctx) {
-	    // ctx.beginPath();
-	    // ctx.arc(this.DIM_X, this.DIM_Y, 10, 0, Math.PI*2);
-	    // ctx.fillStyle = "black";
-	    // ctx.fill();
-	    // ctx.closePath();
 	    ctx.beginPath();
-	    ctx.arc(this.DIM_X, this.DIM_Y, 10, 0, Math.PI*2);
-	    ctx.fillStyle = "black";
+	    // ctx.arc(this.DIM_X, this.DIM_Y, 10, 0, Math.PI*2);
+	    // ctx.rect(this.DIM_X, this.DIM_Y, 20, 20);
+	    ctx.drawImage(this.img, this.DIM_X, this.DIM_Y, 20, 20);
+	    ctx.fillStyle = "transparent";
 	    ctx.fill();
 	    ctx.closePath();
 	    this.DIM_Y += this.dy;
 	
-	    if (this.DIM_Y <= 220) {
+	    if (this.DIM_Y <= 210) {
 	      // this.dy = -1 * this.dy;
-	      this.dy += 0.5;
-	    } else if (this.DIM_Y === 290) {
+	      this.dy += 0.2;
+	    } else if (this.DIM_Y === 280) {
 	      this.dy = 0;
 	    }
 	  }
 	
 	  jump(ctx) {
+	    const music = new Audio("./assets/audio/jump.mp3");
+	    music.play();
 	
-	    if (this.DIM_Y === 290) {
+	    if (this.DIM_Y === 280) {
 	      this.dy = -1.5;
 	    }
 	  }
 	}
 	
 	module.exports = Player;
+
+
+/***/ },
+/* 4 */
+/***/ function(module, exports) {
+
+	class Bird{
+	  constructor() {
+	    this.DIM_X = 600;
+	    this.DIM_Y = 240;
+	    this.dx = -0.5;
+	    this.img = document.getElementById('bird');
+	  }
+	  drawBird(ctx) {
+	    ctx.beginPath();
+	    // ctx.arc(this.DIM_X, this.DIM_Y, 10, 0, Math.PI*2);
+	    // ctx.rect(this.DIM_X, this.DIM_Y, 20, 20);
+	    ctx.drawImage(this.img, this.DIM_X, this.DIM_Y, 20, 20);
+	    ctx.fillStyle = "deepskyblue";
+	    ctx.fill();
+	    ctx.closePath();
+	    this.DIM_X += this.dx;
+	    // if (this.DIM_X === 0) {
+	    //   this.dx = -1 * this.dx;
+	    // } else if (this.DIM_X === 580) {
+	    //   this.dx = -1;
+	    // }
+	  }
+	}
+	
+	module.exports = Bird;
 
 
 /***/ }
