@@ -89,6 +89,12 @@
 	
 	  }
 	
+	  drawScore() {
+	    this.ctx.font = "16px Arial";
+	
+	    this.ctx.fillText("Score: "+this.score, 8, 20);
+	  }
+	
 	  draw(){
 	    this.ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
 	    this.cactus.drawCactus(this.ctx);
@@ -96,6 +102,9 @@
 	    this.bird.drawBird(this.ctx);
 	    this.collision(this.player, this.cactus);
 	    this.drawGround();
+	
+	    this.score += 1;
+	    this.drawScore();
 	  }
 	
 	  handleJumpPress(e) {
@@ -230,11 +239,9 @@
 	    ctx.fill();
 	    ctx.closePath();
 	    this.DIM_X += this.dx;
-	    // if (this.DIM_X === 0) {
-	    //   this.dx = -1 * this.dx;
-	    // } else if (this.DIM_X === 580) {
-	    //   this.dx = -1;
-	    // }
+	    if (this.DIM_X === 0) {
+	      this.DIM_X = 800;
+	    }
 	  }
 	}
 	
