@@ -56,10 +56,10 @@
 	  const game = new Game(ctx);
 	  document.addEventListener('keydown', e => {
 	    game.handleJumpPress(e);
-	    // game.handleStartPress(e);
+	    game.handleStartPress(e);
 	  });
 	
-	  game.start();
+	  // game.start();
 	});
 
 
@@ -78,7 +78,9 @@
 	    this.player = new Player();
 	    this.cactus = new Cactus();
 	    this.bird = new Bird();
-	    this.init = setInterval(this.draw.bind(this), 3);
+	    this.collided = false;
+	    // this.init = setInterval(this.draw.bind(this), 3);
+	    this.start();
 	  }
 	
 	  drawGround() {
@@ -114,12 +116,21 @@
 	    }
 	  }
 	
-	  // handleStartPress(e) {
-	  //   let code = e.keyCode;
-	  //   if (code === 13) {
-	  //     this.start();
-	  //   }
-	  // }
+	  //reset
+	  handleStartPress(e) {
+	    let code = e.keyCode;
+	    if (code === 13) {
+	      if (this.collided) {
+	        this.cactus.DIM_X = 600;
+	        this.cactus.DIM_Y = 280;
+	        this.player.DIM_X = 90;
+	        this.player.DIM_Y = 280;
+	        this.player.dy = -1.5;
+	        this.cactus.dx = -1;
+	        this.start();
+	      }
+	    }
+	  }
 	
 	  collision(rect1, rect2) {
 	    if (rect1.DIM_X < rect2.DIM_X + 20 &&
@@ -128,6 +139,7 @@
 	        20 + rect1.DIM_Y > rect2.DIM_Y) {
 	          // clearInterval(this.start);
 	          clearInterval(this.init);
+	          this.collided = true;
 	          const music = new Audio("./assets/audio/lose.mp3");
 	          music.play();
 	
@@ -135,7 +147,7 @@
 	  }
 	
 	  start() {
-	    this.init;
+	    this.init = setInterval(this.draw.bind(this), 3);
 	  }
 	}
 	
@@ -199,9 +211,9 @@
 	    this.DIM_Y += this.dy;
 	
 	    if (this.DIM_Y <= 210) {
-	      // this.dy = -1 * this.dy;
-	      this.dy += 0.2;
-	    } else if (this.DIM_Y === 280) {
+	      this.dy = -1 * this.dy;
+	      // this.dy += 0.2;
+	    } else if (this.DIM_Y >= 280) {
 	      this.dy = 0;
 	    }
 	  }
@@ -210,7 +222,7 @@
 	    const music = new Audio("./assets/audio/jump.mp3");
 	    music.play();
 	
-	    if (this.DIM_Y === 280) {
+	    if (this.DIM_Y >= 280) {
 	      this.dy = -1.5;
 	    }
 	  }
