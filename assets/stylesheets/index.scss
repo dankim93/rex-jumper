@@ -2,11 +2,19 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #F0F8FF;
 }
 
 h1 {
   color: deepskyblue;
   font-family: 'Chewy', cursive;
+}
+
+.instruction {
+  width: 500px;
+  height: auto;
+  margin-top: 30px;
+  border-radius: 15px;
 }
 
 canvas {
