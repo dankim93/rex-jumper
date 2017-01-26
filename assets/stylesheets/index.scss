@@ -8,6 +8,24 @@ body {
 h1 {
   color: deepskyblue;
   font-family: 'Chewy', cursive;
+  font-size: 45px;
+}
+
+.info {
+  display: flex;
+  flex-direction: row;
+}
+
+.info-child2 {
+  width: 75px;
+  height: 75px;
+  margin-left: 15px;
+}
+
+.info-child1 {
+  width: 60px;
+  height: 60px;
+  margin-top: 5px;
 }
 
 .instruction {
