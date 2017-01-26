@@ -84,7 +84,8 @@
 	    this.cloud = new Cloud();
 	    this.collided = false;
 	    // this.init = setInterval(this.draw.bind(this), 3);
-	    this.start();
+	    // this.start();
+	    this.drawStart();
 	  }
 	
 	  drawGround() {
@@ -92,12 +93,17 @@
 	    this.ctx.moveTo(0, 300);
 	    this.ctx.lineTo(600, 300);
 	    this.ctx.stroke();
-	
 	  }
 	
 	  drawScore() {
 	    this.ctx.font = "16px Arial";
+	    this.ctx.fillStyle = "#000000";
 	    this.ctx.fillText("Score: "+this.score, 8, 20);
+	  }
+	
+	  drawStart() {
+	    this.ctx.font = "20px Arial";
+	    this.ctx.fillText("Press 'Enter' to start", 210, 190);
 	  }
 	
 	  drawGameover() {
@@ -133,39 +139,37 @@
 	    if (code === 13) {
 	      if (this.collided) {
 	        this.cactus.DIM_X = 600;
-	        this.cactus.DIM_Y = 280;
+	        this.cactus.DIM_Y = 270;
 	        this.cactus.dx = -1;
 	        this.player.DIM_X = 90;
-	        this.player.DIM_Y = 280;
+	        this.player.DIM_Y = 270;
 	        this.player.dy = -1.5;
 	        this.bird.DIM_X = 600;
-	        this.bird.DIM_Y = 240;
+	        this.bird.DIM_Y = 220;
 	        this.bird.dx = -0.5;
 	        this.start();
 	      } else {
 	        this.player.dy = -1.5;
 	        this.cactus.dx = -1;
+	        this.start();
 	      }
 	    }
 	  }
 	
 	  collision(rect1, rect2, rect3) {
-	    if (rect1.DIM_X < rect2.DIM_X + 20 &&
-	        rect1.DIM_X + 20 > rect2.DIM_X &&
-	        rect1.DIM_Y < rect2.DIM_Y + 20 &&
-	        20 + rect1.DIM_Y > rect2.DIM_Y) {
+	    if (rect1.DIM_X < rect2.DIM_X + 30 &&
+	        rect1.DIM_X + 30 > rect2.DIM_X &&
+	        rect1.DIM_Y < rect2.DIM_Y + 30 &&
+	        30 + rect1.DIM_Y > rect2.DIM_Y) {
 	          // clearInterval(this.start);
 	          clearInterval(this.init);
 	          this.collided = true;
 	          this.drawGameover();
 	
-	          const music = new Audio("./assets/audio/lose.mp3");
-	          music.play();
-	
 	        } else if (rect1.DIM_X < rect3.DIM_X + 20 &&
-	            rect1.DIM_X + 20 > rect3.DIM_X &&
+	            rect1.DIM_X + 30 > rect3.DIM_X &&
 	            rect1.DIM_Y < rect3.DIM_Y + 20 &&
-	            20 + rect1.DIM_Y > rect3.DIM_Y) {
+	            30 + rect1.DIM_Y > rect3.DIM_Y) {
 	              clearInterval(this.init);
 	              this.collided = true;
 	              this.drawGameover();
@@ -191,15 +195,15 @@
 	class Cactus{
 	  constructor() {
 	    this.DIM_X = 600;
-	    this.DIM_Y = 280;
-	    this.dx = -1;
+	    this.DIM_Y = 270;
+	    this.dx = -2;
 	    this.img = document.getElementById('cactus');
 	  }
 	  drawCactus(ctx) {
 	    ctx.beginPath();
 	    // ctx.arc(this.DIM_X, this.DIM_Y, 10, 0, Math.PI*2);
-	    // ctx.rect(this.DIM_X, this.DIM_Y, 20, 20);
-	    ctx.drawImage(this.img, this.DIM_X, this.DIM_Y, 20, 20);
+	    // ctx.rect(this.DIM_X, this.DIM_Y, 30, 30);
+	    ctx.drawImage(this.img, this.DIM_X, this.DIM_Y, 30, 30);
 	    ctx.fillStyle = "deepskyblue";
 	    ctx.fill();
 	    ctx.closePath();
@@ -222,34 +226,40 @@
 	class Player {
 	  constructor() {
 	    this.DIM_X = 90;
-	    this.DIM_Y = 280;
+	    this.DIM_Y = 270;
 	    this.dy = -1.5;
 	    this.img = document.getElementById('rex');
+	    this.double = 3;
 	  }
 	
 	  drawRex(ctx) {
 	    ctx.beginPath();
 	    // ctx.arc(this.DIM_X, this.DIM_Y, 10, 0, Math.PI*2);
-	    // ctx.rect(this.DIM_X, this.DIM_Y, 20, 20);
-	    ctx.drawImage(this.img, this.DIM_X, this.DIM_Y, 20, 20);
+	    // ctx.rect(this.DIM_X, this.DIM_Y, 30, 30);
+	    ctx.drawImage(this.img, this.DIM_X, this.DIM_Y, 30, 30);
 	    ctx.fillStyle = "transparent";
 	    ctx.fill();
 	    ctx.closePath();
 	    this.DIM_Y += this.dy;
 	
-	    if (this.DIM_Y <= 100) {
+	    if (this.DIM_Y <= 90) {
 	      this.dy = -1 * this.dy;
 	      // this.dy += 0.2;
-	    } else if (this.DIM_Y >= 280) {
+	    } else if (this.DIM_Y >= 270) {
 	      this.dy = 0;
 	    }
 	  }
 	
 	  jump(ctx) {
-	    if (this.DIM_Y >= 280) {
+	    if (this.DIM_Y >= 270 || this.double > 1) {
 	      this.dy = -2;
+	      this.double -= 1;
 	      const music = new Audio("./assets/audio/jump.mp3");
 	      music.play();
+	    }
+	
+	    if (this.DIM_Y >= 270) {
+	      this.double = 3;
 	    }
 	  }
 	}
@@ -264,8 +274,8 @@
 	class Bird{
 	  constructor() {
 	    this.DIM_X = 600;
-	    this.DIM_Y = 240;
-	    this.dx = -0.5;
+	    this.DIM_Y = 220;
+	    this.dx = -1.5;
 	    this.img = document.getElementById('bird');
 	  }
 	  drawBird(ctx) {
@@ -277,7 +287,7 @@
 	    ctx.fill();
 	    ctx.closePath();
 	    this.DIM_X += this.dx;
-	    if (this.DIM_X === 0) {
+	    if (this.DIM_X < 0) {
 	      this.DIM_X = 800;
 	    }
 	  }
