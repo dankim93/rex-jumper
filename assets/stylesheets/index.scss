@@ -1,0 +1,15 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  color: deepskyblue;
+  font-family: 'Chewy', cursive;
+}
+
+canvas {
+  background-image: url("../images/background.png");
+  background-size: 600px 340px;
+}
