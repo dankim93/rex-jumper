@@ -19,6 +19,13 @@ h1 {
 .sound {
   width: 40px;
   height: auto;
+  margin-top: 10px;
+}
+
+.sound:hover {
+  cursor: pointer;
+  background-color: lightgray;
+  border-radius: 3px;
 }
 
 .info-child2 {
