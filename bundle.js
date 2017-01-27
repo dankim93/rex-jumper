@@ -52,8 +52,15 @@
 	  canvas.height = Game.DIM_Y;
 	  var ctx = canvas.getContext("2d");
 	
-	  const music = new Audio("./assets/audio/beginning.mp3");
-	  music.play();
+	  // const music = new Audio("./assets/audio/beginning.mp3");
+	  // music.play();
+	  var audio = document.getElementById('beginning');
+	  document.getElementById('mute').addEventListener('click', e => {
+	      e = e || window.event;
+	      audio.muted = !audio.muted;
+	      e.preventDefault();
+	  }, false);
+	
 	
 	  const game = new Game(ctx);
 	  document.addEventListener('keydown', e => {
@@ -83,8 +90,7 @@
 	    this.bird = new Bird();
 	    this.cloud = new Cloud();
 	    this.collided = false;
-	    // this.init = setInterval(this.draw.bind(this), 3);
-	    // this.start();
+	    this.first = true;
 	    this.drawStart();
 	  }
 	
@@ -148,9 +154,10 @@
 	        this.bird.DIM_Y = 220;
 	        this.bird.dx = -0.5;
 	        this.start();
-	      } else {
+	      } else if (this.first){
 	        this.player.dy = -1.5;
 	        this.cactus.dx = -1;
+	        this.first = false;
 	        this.start();
 	      }
 	    }

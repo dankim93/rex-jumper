@@ -16,6 +16,11 @@ h1 {
   flex-direction: row;
 }
 
+.sound {
+  width: 40px;
+  height: auto;
+}
+
 .info-child2 {
   width: 75px;
   height: 75px;
