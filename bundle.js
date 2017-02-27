@@ -153,6 +153,7 @@
 	        this.bird.DIM_X = 600;
 	        this.bird.DIM_Y = 220;
 	        this.bird.dx = -0.5;
+	        this.collided = false;
 	        this.start();
 	      } else if (this.first){
 	        this.player.dy = -1.5;
@@ -168,19 +169,18 @@
 	        rect1.DIM_X + 30 > rect2.DIM_X &&
 	        rect1.DIM_Y < rect2.DIM_Y + 30 &&
 	        30 + rect1.DIM_Y > rect2.DIM_Y) {
-	          // clearInterval(this.start);
 	          clearInterval(this.init);
 	          this.collided = true;
 	          this.drawGameover();
 	
-	        } else if (rect1.DIM_X < rect3.DIM_X + 20 &&
-	            rect1.DIM_X + 30 > rect3.DIM_X &&
-	            rect1.DIM_Y < rect3.DIM_Y + 20 &&
-	            30 + rect1.DIM_Y > rect3.DIM_Y) {
-	              clearInterval(this.init);
-	              this.collided = true;
-	              this.drawGameover();
-	        }
+	    } else if (rect1.DIM_X < rect3.DIM_X + 20 &&
+	        rect1.DIM_X + 30 > rect3.DIM_X &&
+	        rect1.DIM_Y < rect3.DIM_Y + 20 &&
+	        30 + rect1.DIM_Y > rect3.DIM_Y) {
+	          clearInterval(this.init);
+	          this.collided = true;
+	          this.drawGameover();
+	    }
 	  }
 	
 	  start() {

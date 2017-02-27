@@ -35,6 +35,7 @@ collision(rect1, rect2, rect3) {
 }
 ```
 - Every frame, collision function is used to detect if any of `bird` or `cactus` is touching the `player`
+
 ## Project Design
 
 Rex Jumper was designed and built in 5 days.
