@@ -1,12 +1,12 @@
 # Rex Jumper
 
-[Rex Jumper] [rexjumper] is a JavaScript game inspired by T-Rex Runner built using vanilla JavaScript and Canvas
+[Rexjumper] is a JavaScript game inspired by T-Rex Runner built using vanilla JavaScript and Canvas
 
 ![ ](./docs/wireframes/gameover1.png)
 
 ![ ](./docs/wireframes/home1.png)
 
-[rexjumper]: https://dankim93.github.io/rex-jumper/
+[Rexjumper]: https://dankim93.github.io/rex-jumper/
 
 ## Features
 - Ability to Jump over objects
